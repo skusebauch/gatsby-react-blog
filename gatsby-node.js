@@ -26,12 +26,16 @@ exports.createPages = ({ graphql, actions }) => {
     }
     const posts = result.data.allMdx.nodes
 
-    posts.forEach(post => {
+    posts.forEach((post, index) => {
+      const previous = index === post.length - 1 ? null : posts[index + 1]
+      const next = index === 0 ? null : posts[index - 1]
       createPage({
         path: post.fields.slug,
         component: blogPostTemplate,
         context: {
           slug: post.fields.slug,
+          previous,
+          next,
         },
       })
     })
