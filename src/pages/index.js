@@ -1,16 +1,17 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { useSiteMetadata } from "../hooks/useSiteMetadata"
 import Layout from "../components/Layout"
+import Dump from "../components/Dump"
 
 export default ({ data }) => {
-  const { title, description } = useSiteMetadata()
   return (
     <>
       <Layout>
+        <Dump checkData={data} />
         {data.allMdx.nodes.map(({ id, excerpt, frontmatter }) => (
           <React.Fragment key={id}>
             <h1>{frontmatter.title}</h1>
+            <p>{frontmatter.date}</p>
             <p>{excerpt}</p>
           </React.Fragment>
         ))}
@@ -33,6 +34,9 @@ export const query = graphql`
         }
         excerpt(pruneLength: 250)
         id
+        fields {
+          slug
+        }
       }
     }
   }
