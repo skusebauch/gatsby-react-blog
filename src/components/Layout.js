@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import { useSiteMetadata } from "../hooks/useSiteMetadata"
 import Header from "./Header"
 import styled from "styled-components"
@@ -19,3 +20,18 @@ function Layout({ children }) {
 }
 
 export default Layout
+
+export const query = graphql`
+  {
+    allMdx {
+      nodes {
+        id
+        excerpt(pruneLength: 250)
+        frontmatter {
+          title
+          date
+        }
+      }
+    }
+  }
+`
